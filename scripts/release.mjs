@@ -28,8 +28,10 @@ const ASSET = 'CoasterCount.apk';
 if (!version) fail('Usage: npm run release -- <x.y.z> [--dry-run]');
 const tag = `v${version}`;
 
+// Only npx needs a shell on Windows (it's a .cmd); everything else runs
+// directly so arguments with spaces (tag messages, titles) stay intact.
 const run = (cmd, cmdArgs) =>
-  execFileSync(cmd, cmdArgs, { cwd: root, stdio: 'inherit', shell: process.platform === 'win32' });
+  execFileSync(cmd, cmdArgs, { cwd: root, stdio: 'inherit', shell: process.platform === 'win32' && cmd === 'npx' });
 const out = (cmd, cmdArgs) => execFileSync(cmd, cmdArgs, { cwd: root, encoding: 'utf8' }).trim();
 
 // ── preflight ──────────────────────────────────────────────────────────────
