@@ -4,6 +4,8 @@
 
 # Coaster-Count for Android
 
+> **Unofficial project:** this app is not affiliated with, endorsed by or maintained by Coaster-Count or its operators.
+
 **[coaster-count.com](https://coaster-count.com) as a fast, clean Android app.**<br>
 Count your rides, browse the catalogue and compare rankings, with a modern look that follows your phone's light or dark mode.
 
