@@ -15,6 +15,13 @@ html.ccw-app body:has(#stage) {
   overflow: hidden;
 }
 
+/* The home doesn't scroll, and with body as the (hidden) scroll container
+   a sticky header would get the status-bar offset twice. */
+html.ccw-app body:has(#stage) > header {
+  position: relative;
+  top: auto;
+}
+
 html.ccw-app body:has(#stage) > #main_content {
   display: flex;
   flex: 1 1 auto;
