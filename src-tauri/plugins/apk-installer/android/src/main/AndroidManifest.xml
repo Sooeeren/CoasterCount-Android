@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Lets the app hand a downloaded update to the system installer. The
+         user still confirms every install, and Android only accepts an update
+         signed with the same key as the installed app. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <application>
+        <provider
+            android:name="app.coastercount.apkinstaller.UpdateFileProvider"
+            android:authorities="${applicationId}.apkinstaller.files"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/apk_installer_paths" />
+        </provider>
+    </application>
+</manifest>

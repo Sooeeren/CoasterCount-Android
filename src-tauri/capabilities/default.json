@@ -7,6 +7,7 @@
     "core:default",
     "opener:default",
     "allow-app-info",
-    "allow-open-external"
+    "allow-open-external",
+    "allow-install-update"
   ]
 }

@@ -17,7 +17,7 @@ use std::{
 
 /// Commands defined in `src/commands.rs`. Keep this list in sync — each entry
 /// generates an `allow-<name>` permission (e.g. `allow-app-info`; `_` becomes `-`).
-const APP_COMMANDS: &[&str] = &["app_info", "open_external"];
+const APP_COMMANDS: &[&str] = &["app_info", "open_external", "install_update"];
 
 fn main() {
     bundle_inject_layer();

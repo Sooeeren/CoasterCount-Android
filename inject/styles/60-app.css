@@ -1,0 +1,245 @@
+/*
+ * App-owned UI (not restyled site markup): the "About this app" sheet and
+ * the update banner, both built by features/30-app-about.js.
+ */
+
+/* ── isolation from the site's global element styles ─────────────────── */
+
+html.ccw-app .ccw-sheet button,
+html.ccw-app .ccw-update-banner button {
+  margin: 0;
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+html.ccw-app .ccw-sheet button::before,
+html.ccw-app .ccw-sheet button::after,
+html.ccw-app .ccw-update-banner button::before,
+html.ccw-app .ccw-update-banner button::after {
+  content: none !important;
+}
+
+/* ── shared buttons ──────────────────────────────────────────────────── */
+
+html.ccw-app .ccw-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--ccw-radius);
+  font: 600 16px/1 Montserrat, system-ui, sans-serif;
+  cursor: pointer;
+  transition: background-color 140ms var(--ccw-ease), transform 140ms var(--ccw-ease), opacity 140ms;
+}
+html.ccw-app .ccw-btn:active { transform: scale(0.98); }
+html.ccw-app .ccw-btn:disabled { opacity: 0.6; transform: none; }
+html.ccw-app .ccw-btn-primary {
+  background: var(--ccw-brand);
+  color: var(--ccw-on-brand);
+}
+html.ccw-app .ccw-btn-primary:active { background: var(--ccw-brand-strong); }
+html.ccw-app .ccw-btn-quiet {
+  background: transparent;
+  color: var(--ccw-text);
+}
+
+/* ── About sheet ─────────────────────────────────────────────────────── */
+
+html.ccw-app.ccw-sheet-open body { overflow: hidden; }
+
+html.ccw-app .ccw-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 env(safe-area-inset-bottom, 0px);
+  background: var(--ccw-bg);
+  color: var(--ccw-text);
+  font-family: Montserrat, system-ui, sans-serif;
+  text-align: left;
+  animation: ccw-sheet-in 280ms var(--ccw-ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  html.ccw-app .ccw-sheet { animation: none; }
+}
+
+html.ccw-app .ccw-sheet-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 auto;
+  /* the bar also fills the status-bar strip above it */
+  height: calc(var(--ccw-header-h) + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) 8px 0 20px;
+  box-sizing: border-box;
+  background: var(--ccw-surface);
+  border-bottom: 1px solid var(--ccw-line);
+}
+html.ccw-app .ccw-sheet-bar h2 {
+  margin: 0;
+  color: var(--ccw-text);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+html.ccw-app .ccw-sheet-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ccw-text);
+}
+html.ccw-app .ccw-sheet-close:active { background: var(--ccw-surface-2); }
+html.ccw-app .ccw-sheet-close svg { width: 22px; height: 22px; }
+
+html.ccw-app .ccw-sheet-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 32px 16px 32px;
+}
+
+html.ccw-app .ccw-about-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 28px;
+  text-align: center;
+}
+html.ccw-app .ccw-app-icon {
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  margin-bottom: 16px;
+  border-radius: 22px;
+  background: #004a80; /* the launcher icon's blue, in both themes */
+  box-shadow: 0 10px 24px -10px rgba(0, 74, 128, 0.6);
+}
+html.ccw-app .ccw-app-icon svg {
+  width: 40px;
+  height: 40px;
+  fill: #ffffff;
+}
+html.ccw-app .ccw-about-hero h3 {
+  margin: 0;
+  color: var(--ccw-text);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+html.ccw-app .ccw-about-version {
+  margin: 4px 0 0;
+  color: var(--ccw-muted);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+html.ccw-app .ccw-card {
+  margin: 0 0 16px;
+  padding: 0;
+  border: 1px solid var(--ccw-line);
+  border-radius: 16px;
+  background: var(--ccw-surface);
+}
+
+html.ccw-app .ccw-update { padding: 18px 16px 16px; }
+html.ccw-app .ccw-update h4 {
+  margin: 0 0 4px;
+  color: var(--ccw-text);
+  font-size: 16px;
+  font-weight: 700;
+}
+html.ccw-app .ccw-update-status {
+  min-height: 1.5em;
+  margin: 0 0 16px;
+  color: var(--ccw-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+html.ccw-app .ccw-update .ccw-btn { width: 100%; }
+
+html.ccw-app .ccw-links { overflow: hidden; }
+html.ccw-app .ccw-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 60px;
+  padding: 10px 12px 10px 16px;
+  color: var(--ccw-text) !important;
+  text-decoration: none !important;
+}
+html.ccw-app .ccw-row + .ccw-row { border-top: 1px solid var(--ccw-line); }
+html.ccw-app .ccw-row:active { background: var(--ccw-surface-2); }
+html.ccw-app .ccw-row-label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+}
+html.ccw-app .ccw-row-sub {
+  display: block;
+  margin-top: 2px;
+  color: var(--ccw-muted);
+  font-size: 13px;
+}
+html.ccw-app .ccw-row-chevron {
+  flex: 0 0 auto;
+  color: var(--ccw-muted);
+}
+html.ccw-app .ccw-row-chevron svg { display: block; width: 20px; height: 20px; }
+
+html.ccw-app .ccw-fine {
+  margin: 20px 8px 0;
+  color: var(--ccw-muted);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* ── update banner ───────────────────────────────────────────────────── */
+
+html.ccw-app .ccw-update-banner {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: 2500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 8px 8px 16px;
+  border: 1px solid var(--ccw-line);
+  border-radius: 16px;
+  background: var(--ccw-surface);
+  box-shadow: var(--ccw-shadow-pop);
+  color: var(--ccw-text);
+  font-family: Montserrat, system-ui, sans-serif;
+  animation: ccw-banner-in 320ms var(--ccw-ease);
+}
+html.ccw-app .ccw-update-banner-text {
+  flex: 1 1 auto;
+  font-size: 14px;
+  font-weight: 600;
+}
+html.ccw-app .ccw-update-banner .ccw-btn {
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+@keyframes ccw-banner-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.ccw-app .ccw-update-banner { animation: none; }
+}

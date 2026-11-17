@@ -14,7 +14,28 @@ val tauriProperties = Properties().apply {
     }
 }
 
+// Release signing. keystore.properties (git-ignored) holds:
+//   storeFile=<path to .jks>   password=<…>   keyAlias=<…>
+// Every release must be signed with the same key, or Android refuses to
+// install it as an update.
+val keystoreProperties = Properties().apply {
+    val propFile = rootProject.file("keystore.properties")
+    if (propFile.exists()) {
+        propFile.inputStream().use { load(it) }
+    }
+}
+
 android {
+    signingConfigs {
+        if (keystoreProperties.getProperty("storeFile") != null) {
+            create("release") {
+                storeFile = file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("password")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("password")
+            }
+        }
+    }
     compileSdk = 37
     namespace = "app.coastercount.wrapper"
     defaultConfig {
@@ -39,6 +60,7 @@ android {
             }
         }
         getByName("release") {
+            signingConfigs.findByName("release")?.let { signingConfig = it }
             optimization {
                enable = true
             }

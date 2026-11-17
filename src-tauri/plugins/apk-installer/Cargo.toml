@@ -1,0 +1,16 @@
+[package]
+name = "tauri-plugin-apk-installer"
+version = "0.1.0"
+description = "Downloads an APK and hands it to Android's package installer (in-app updates)."
+edition = "2021"
+publish = false
+# Required so tauri-build can find this plugin's Android project.
+links = "tauri-plugin-apk-installer"
+
+[dependencies]
+tauri = { version = "2" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[build-dependencies]
+tauri-plugin = { version = "2", features = ["build"] }

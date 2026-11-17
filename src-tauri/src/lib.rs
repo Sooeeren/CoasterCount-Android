@@ -25,9 +25,11 @@ pub fn run() {
                 .open_js_links_on_click(false)
                 .build(),
         )
+        .plugin(tauri_plugin_apk_installer::init())
         .invoke_handler(tauri::generate_handler![
             commands::app_info,
             commands::open_external,
+            commands::install_update,
         ])
         .setup(|app| {
             let handle = app.handle().clone();

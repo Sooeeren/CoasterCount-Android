@@ -9,3 +9,6 @@ src-tauri/gen/android/keystore.properties
 *.jks
 *.keystore
 .impeccable/hook.cache.json
+
+# Release output
+release/

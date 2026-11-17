@@ -492,12 +492,13 @@ dependencies = [
 
 [[package]]
 name = "coastercount"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "log",
  "serde",
  "tauri",
  "tauri-build",
+ "tauri-plugin-apk-installer",
  "tauri-plugin-opener",
  "url",
 ]
@@ -3692,6 +3693,16 @@ dependencies = [
  "serde_json",
  "tauri-utils",
  "walkdir",
+]
+
+[[package]]
+name = "tauri-plugin-apk-installer"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-plugin",
 ]
 
 [[package]]
