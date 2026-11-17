@@ -154,3 +154,5 @@ Every release must be signed with **the same key**, or Android refuses to instal
 
 All content, data and the Coaster-Count name and logo belong to [coaster-count.com](https://coaster-count.com).
 This repository only contains the Android shell and its styling.
+
+Built by [Sooeeren](https://github.com/Sooeeren) together with [Claude](https://claude.com/claude-code) (Anthropic).
