@@ -1,0 +1,245 @@
+/*
+ * Content pages: catalogue, rankings, news, about, account pages.
+ *
+ * Calmer headings, flat sections, tables as clean lists with hairlines and
+ * tabular numerals, links in the brand colour.
+ */
+
+html.ccw-app #main_content {
+  color: var(--ccw-text);
+}
+
+html.ccw-app #main_content > section,
+html.ccw-app #main_content section.table,
+html.ccw-app #main_content section.one_column {
+  background: var(--ccw-surface) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid var(--ccw-line);
+}
+/* The site opens every page with 60px of air above the title. */
+html.ccw-app #main_content > section:first-child {
+  padding-top: 20px !important;
+}
+
+html.ccw-app #main_content section.no_background {
+  background: transparent !important;
+  border-bottom: 0;
+}
+
+/* ── type ─────────────────────────────────────────────────────────────── */
+
+html.ccw-app #main_content h1 {
+  margin: 8px 0 12px;
+  color: var(--ccw-text);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-align: left;
+  text-wrap: balance;
+}
+html.ccw-app #main_content h1.center {
+  margin-top: 28px;
+  font-size: 22px;
+  text-align: left;
+}
+html.ccw-app #main_content h2 {
+  margin: 0 0 8px;
+  color: var(--ccw-text);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+html.ccw-app #main_content h3 {
+  margin: 20px 0 6px;
+  color: var(--ccw-text);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+html.ccw-app #main_content p,
+html.ccw-app #main_content li {
+  color: var(--ccw-text);
+  line-height: 1.6;
+}
+html.ccw-app #main_content .font_small {
+  color: var(--ccw-muted);
+}
+
+html.ccw-app #main_content a:not(.button):not([class*="bg_color"]):not([class^="ccw-"]) {
+  color: var(--ccw-link) !important;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* Counts inside tables are links; underlines on every number are noise. */
+html.ccw-app #main_content table a {
+  text-decoration: none !important;
+}
+
+/* Ranking mode switch (Strict / Personal / All): a wrapping row of chips. */
+html.ccw-app #main_content p.no_font:has(> a.button.switch) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px;
+  margin: 4px 0 16px;
+}
+html.ccw-app #main_content a.button.switch {
+  margin: 0 !important;
+  padding: 0 14px 0 10px !important;
+  border: 1px solid var(--ccw-line) !important;
+  border-radius: 999px !important;
+  gap: 6px;
+}
+html.ccw-app #main_content a.button.switch.bg_color_dblue {
+  border-color: var(--ccw-brand) !important;
+}
+html.ccw-app #main_content a.button.switch:not(.bg_color_dblue),
+html.ccw-app #main_content a.button.switch:not(.bg_color_dblue) svg,
+html.ccw-app #main_content a.button.switch:not(.bg_color_dblue) use {
+  color: var(--ccw-text) !important;
+}
+html.ccw-app #main_content a.button.switch svg,
+html.ccw-app #main_content a.button.switch use {
+  fill: currentColor !important;
+}
+html.ccw-app #main_content a.button.switch.bg_color_dblue svg,
+html.ccw-app #main_content a.button.switch.bg_color_dblue use {
+  color: var(--ccw-on-brand) !important;
+}
+html.ccw-app #main_content a.button.switch svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Filters: one full-width column instead of centred pills of random width. */
+html.ccw-app #main_content p.buttons,
+html.ccw-app #main_content p.no_font:has(> select) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+html.ccw-app #main_content select {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+/* Year jump links on /page/news: a scrollable row of pills. */
+html.ccw-app #main_content p.anchor_links {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  margin: 0 -20px;
+  padding: 4px 20px 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+html.ccw-app #main_content p.anchor_links a {
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--ccw-surface-2);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ── tables ───────────────────────────────────────────────────────────── */
+
+html.ccw-app #main_content table {
+  border-collapse: collapse;
+  background: transparent !important;
+}
+html.ccw-app #main_content tr {
+  background: transparent !important;
+  background-image: none !important;
+}
+html.ccw-app #main_content tbody tr {
+  border-bottom: 1px solid var(--ccw-line);
+}
+html.ccw-app #main_content tbody tr:last-child {
+  border-bottom: 0;
+}
+html.ccw-app #main_content table.highlight tbody tr:active {
+  background: var(--ccw-surface-2) !important;
+}
+html.ccw-app #main_content td {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  color: var(--ccw-text);
+  vertical-align: middle;
+}
+html.ccw-app #main_content th {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--ccw-line);
+  color: var(--ccw-muted) !important;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+html.ccw-app #main_content td.section_header {
+  background: var(--ccw-surface-2) !important;
+  background-image: none !important;
+}
+html.ccw-app #main_content td.section_header h3 {
+  margin: 0;
+}
+html.ccw-app #main_content td.gap {
+  background: transparent !important;
+}
+html.ccw-app #main_content .number,
+html.ccw-app #main_content b.number {
+  color: var(--ccw-text);
+  font-size: 17px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Images in articles: rounded, never wider than the screen. */
+html.ccw-app #main_content img:not(#cover) {
+  max-width: 100%;
+  height: auto;
+}
+html.ccw-app #main_content .image_website img,
+html.ccw-app #main_content img.original_fit {
+  border-radius: var(--ccw-radius);
+}
+
+/* ── dark-mode repairs for the site's colour helpers ──────────────────── */
+
+@media (prefers-color-scheme: dark) {
+  html.ccw-app .bg_color_white,
+  html.ccw-app .bg_color_lgrey {
+    background-color: var(--ccw-surface-2) !important;
+    color: var(--ccw-text) !important;
+  }
+  html.ccw-app #popup.bg_color_white,
+  html.ccw-app #dialog.bg_color_white {
+    background-color: var(--ccw-surface) !important;
+  }
+  html.ccw-app .color_dblue {
+    color: var(--ccw-link) !important;
+  }
+  html.ccw-app #main_content td,
+  html.ccw-app #main_content th,
+  html.ccw-app #main_content span,
+  html.ccw-app #main_content b,
+  html.ccw-app #main_content label {
+    color: inherit;
+  }
+  /* Select icons (eye, funnel, chevron) are recoloured for dark mode by
+     features/20-control-icons.js. */
+  html.ccw-app #main_content td.section_header {
+    border-color: var(--ccw-line) !important;
+  }
+  html.ccw-app #main_content th {
+    border-color: var(--ccw-line) !important;
+  }
+}

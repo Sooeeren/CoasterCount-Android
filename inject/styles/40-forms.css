@@ -1,0 +1,313 @@
+/*
+ * Popups, form fields and buttons.
+ *
+ * #popup (login, reset password, …) is a small floating card on the site.
+ * In the app it becomes a full-screen sheet: title bar with a close button,
+ * fields at full width, one primary action.
+ */
+
+/* ── full-screen popup ────────────────────────────────────────────────── */
+
+html.ccw-app #popup {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100dvh !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px) !important;
+  border-radius: 0 !important;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--ccw-surface) !important;
+  box-shadow: none !important;
+  z-index: 2000 !important; /* above the site's backdrop (#modal_popup, 1010) */
+}
+
+/* The sheet covers the whole screen, so the dimming backdrop is pointless. */
+html.ccw-app #modal_popup {
+  background: transparent !important;
+}
+
+html.ccw-app #popup_content,
+html.ccw-app #popup_content form,
+html.ccw-app #popup_content section {
+  width: auto !important;
+  box-sizing: border-box;
+}
+html.ccw-app #popup.animate {
+  animation: ccw-sheet-in 280ms var(--ccw-ease);
+}
+@keyframes ccw-sheet-in {
+  from { opacity: 0.6; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.ccw-app #popup.animate { animation: none; }
+}
+
+/* Title bar: flat, left-aligned title, close button on the right. */
+html.ccw-app #popup > header,
+html.ccw-app #popup > header > div {
+  background: var(--ccw-surface) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: var(--ccw-text) !important;
+}
+html.ccw-app #popup > header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-bottom: 1px solid var(--ccw-line);
+}
+html.ccw-app #popup > header > div {
+  display: flex;
+  align-items: center;
+  height: var(--ccw-header-h);
+  padding: 0 64px 0 20px;
+  text-align: left;
+}
+html.ccw-app #popup_title {
+  color: var(--ccw-text) !important;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+html.ccw-app #popup > header svg.close {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+html.ccw-app #popup > header svg {
+  top: 50% !important;
+  right: 8px !important;
+  left: auto !important;
+  width: 44px;
+  height: 44px;
+  padding: 12px;
+  box-sizing: border-box;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  fill: currentColor !important;
+  color: var(--ccw-text);
+  filter: none !important;
+}
+html.ccw-app #popup > header svg use {
+  color: var(--ccw-text) !important;
+  fill: var(--ccw-text) !important;
+}
+
+html.ccw-app #popup_content {
+  padding: 8px 20px 24px !important;
+  text-align: left;
+}
+html.ccw-app #popup_content section {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* ── form rows ────────────────────────────────────────────────────────── */
+
+html.ccw-app p.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: auto !important;
+  margin: 20px 0 0;
+  padding: 0;
+  text-align: left;
+}
+html.ccw-app p.form > label {
+  margin: 0;
+  padding: 0 !important;
+  color: var(--ccw-text);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+}
+
+html.ccw-app input[type="text"],
+html.ccw-app input[type="email"],
+html.ccw-app input[type="password"],
+html.ccw-app input[type="number"],
+html.ccw-app input[type="search"],
+html.ccw-app input[type="date"],
+html.ccw-app textarea {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 52px;
+  margin: 0 !important;
+  padding: 0 16px;
+  box-sizing: border-box;
+  border: 1px solid var(--ccw-line) !important;
+  border-radius: var(--ccw-radius) !important;
+  background: var(--ccw-surface-2) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: var(--ccw-text) !important;
+  font: 500 16px/1.4 Montserrat, system-ui, sans-serif; /* 16px: no zoom on focus */
+  transition: border-color 160ms var(--ccw-ease), box-shadow 160ms var(--ccw-ease), background-color 160ms var(--ccw-ease);
+}
+html.ccw-app textarea {
+  padding: 14px 16px;
+}
+html.ccw-app input::placeholder,
+html.ccw-app textarea::placeholder {
+  color: var(--ccw-muted);
+  opacity: 1;
+}
+html.ccw-app input:focus,
+html.ccw-app textarea:focus {
+  outline: none;
+  border-color: var(--ccw-brand) !important;
+  background: var(--ccw-surface) !important;
+  box-shadow: 0 0 0 4px var(--ccw-focus) !important;
+}
+
+/* "Stay signed in": label and box on one row, box first. */
+html.ccw-app p.form.checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+html.ccw-app p.form.checkbox > input[type="checkbox"] {
+  order: -1;
+}
+html.ccw-app p.form.checkbox > label {
+  margin: 0;
+  padding: 0;
+  font-weight: 500;
+}
+html.ccw-app input[type="checkbox"] {
+  appearance: auto !important;
+  -webkit-appearance: checkbox !important;
+  flex: 0 0 auto;
+  width: 22px !important;
+  height: 22px !important;
+  margin: 0;
+  border: 0 !important;
+  border-radius: 6px !important;
+  background: none !important;
+  box-shadow: none !important;
+  accent-color: var(--ccw-brand);
+}
+
+/* ── buttons ──────────────────────────────────────────────────────────── */
+
+html.ccw-app button.bg_color_dblue,
+html.ccw-app a.button.bg_color_dblue,
+html.ccw-app input[type="submit"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--ccw-radius) !important;
+  background: var(--ccw-brand) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: var(--ccw-on-brand) !important;
+  font: 600 16px/1 Montserrat, system-ui, sans-serif;
+  text-shadow: none !important;
+  transition: background-color 140ms var(--ccw-ease), transform 140ms var(--ccw-ease);
+}
+html.ccw-app button.bg_color_dblue:active,
+html.ccw-app a.button.bg_color_dblue:active,
+html.ccw-app input[type="submit"]:active {
+  background: var(--ccw-brand-strong) !important;
+  transform: scale(0.98);
+}
+/* The site layers a gloss gradient on buttons via ::before. */
+html.ccw-app .bg_color_dblue::before,
+html.ccw-app a.button.switch::before {
+  background: none !important;
+  box-shadow: none !important;
+}
+html.ccw-app button.bg_color_dblue svg,
+html.ccw-app button.bg_color_dblue use {
+  fill: currentColor !important;
+  filter: none !important;
+}
+
+/* The popup's submit is the one primary action: full width. */
+html.ccw-app #popup form button.bg_color_dblue {
+  width: 100% !important;
+  min-height: 52px;
+  margin: 8px 0 0 !important;
+}
+html.ccw-app #popup form section > p:last-child {
+  margin-top: 24px;
+}
+
+/* "Trouble signing in" links: compact row under the form. */
+html.ccw-app #popup p.linklist {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 4px;
+  margin: 28px 0 0;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--ccw-line);
+  text-align: center;
+}
+html.ccw-app #popup p.linklist > span {
+  flex: 1 0 100%;
+  margin-bottom: 4px;
+  border: 0 !important;
+  color: var(--ccw-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+html.ccw-app #popup p.linklist > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 10px;
+  color: var(--ccw-link) !important;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ── selects and segmented switches (rankings filters) ────────────────── */
+
+html.ccw-app select {
+  min-height: 44px;
+  padding: 0 40px 0 14px;
+  border: 1px solid var(--ccw-line) !important;
+  border-radius: var(--ccw-radius-sm) !important;
+  background-color: var(--ccw-surface-2) !important;
+  box-shadow: none !important;
+  color: var(--ccw-text) !important;
+  font: 500 15px/1.2 Montserrat, system-ui, sans-serif;
+}
+html.ccw-app option,
+html.ccw-app optgroup {
+  background: var(--ccw-surface);
+  color: var(--ccw-text);
+}
+
+html.ccw-app a.button.switch {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--ccw-line);
+  background: var(--ccw-surface) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: var(--ccw-text) !important;
+  font-size: 14px;
+  font-weight: 600;
+}
+html.ccw-app a.button.switch.bg_color_dblue {
+  border-color: var(--ccw-brand);
+  background: var(--ccw-brand) !important;
+  color: var(--ccw-on-brand) !important;
+}

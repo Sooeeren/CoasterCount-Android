@@ -1,20 +1,93 @@
 /*
- * Custom theme — this is where the restyling work goes.
+ * Theme tokens + global base.
  *
- * Tips
- *  - Scope rules under `html.ccw-app` so they only apply inside the app and
- *    beat the site's own selectors on specificity.
- *  - Our <style> is appended after the site's stylesheet, so equal-specificity
- *    rules already win; reach for !important only when the site uses it.
- *  - Inspect the live site with chrome://inspect (debug APK) or a desktop
- *    browser at https://coaster-count.com to find selectors.
- *  - Add more files (20-header.css, 30-lists.css, …) — they're bundled in
- *    alphabetical order. Prefix with `_` to disable a file.
+ * Direction: keep the Coaster-Count brand (logo, brand blue #004a80,
+ * Montserrat) but replace the site's gloss, gradients and heavy shadows with
+ * flat surfaces, hairline dividers and roomy touch targets. Light and dark
+ * follow the phone's system setting.
+ *
+ * Every rule is scoped under `html.ccw-app` so nothing leaks into a browser.
+ * Component files: 20-chrome (header, menus, footer), 30-home, 40-forms
+ * (login popup, inputs, buttons), 50-content (headings, tables, news).
  */
 
 html.ccw-app {
-  /* Design tokens — wire these into rules below as the theme grows. */
-  --ccw-accent: #e4572e;
-  --ccw-bg: #3f3f3f; /* matches the site's theme-color today */
-  --ccw-radius: 10px;
+  color-scheme: light dark;
+
+  --ccw-brand: #004a80;          /* the site's own dark blue */
+  --ccw-brand-strong: #003a66;   /* pressed */
+  --ccw-on-brand: #ffffff;
+
+  --ccw-bg: #f4f5f7;             /* page */
+  --ccw-surface: #ffffff;        /* header, cards, popup */
+  --ccw-surface-2: #eef0f3;      /* fields, section headers, hover */
+  --ccw-line: #e1e4e9;           /* hairlines */
+  --ccw-text: #141922;
+  --ccw-muted: #5a6372;          /* 6.0:1 on --ccw-bg */
+  --ccw-link: #004a80;
+  --ccw-focus: rgba(0, 74, 128, 0.28);
+
+  --ccw-radius: 12px;
+  --ccw-radius-sm: 8px;
+  --ccw-tap: 48px;               /* minimum touch target */
+  --ccw-shadow-pop: 0 12px 32px -8px rgba(16, 24, 40, 0.18), 0 2px 6px rgba(16, 24, 40, 0.06);
+  --ccw-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* the site's header used to be 100px; ours is one 56px row */
+  --ccw-header-h: 56px;
+}
+
+@media (prefers-color-scheme: dark) {
+  html.ccw-app {
+    --ccw-brand: #2f7fc4;        /* lifted so filled buttons read on dark */
+    --ccw-brand-strong: #256aa6;
+    --ccw-bg: #0d1015;
+    --ccw-surface: #161a21;
+    --ccw-surface-2: #1f242d;
+    --ccw-line: #2a303a;
+    --ccw-text: #e9ecf1;
+    --ccw-muted: #9aa3b1;        /* 7.4:1 on --ccw-bg */
+    --ccw-link: #7cb8ec;
+    --ccw-focus: rgba(124, 184, 236, 0.35);
+    --ccw-shadow-pop: 0 16px 40px -8px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ── base ─────────────────────────────────────────────────────────────── */
+
+html.ccw-app,
+html.ccw-app body {
+  background: var(--ccw-bg) !important;
+  color: var(--ccw-text);
+}
+
+html.ccw-app body {
+  font-family: Montserrat, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "tnum" 1; /* counts and ranks line up */
+}
+
+html.ccw-app ::selection {
+  background: var(--ccw-focus);
+  color: inherit;
+}
+
+html.ccw-app input,
+html.ccw-app textarea {
+  caret-color: var(--ccw-brand);
+}
+
+html.ccw-app :focus-visible {
+  outline: 2px solid var(--ccw-link);
+  outline-offset: 2px;
+}
+
+/* The site sprinkles a generic heavy shadow on many containers. */
+html.ccw-app .shadow_here {
+  box-shadow: none !important;
+}
+
+/* Back-to-top arrow: flat round button instead of the glossy glyph. */
+html.ccw-app #to_top {
+  filter: none;
 }

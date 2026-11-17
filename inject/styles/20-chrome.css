@@ -1,0 +1,184 @@
+/*
+ * App chrome: header, dropdown menus, footer.
+ *
+ * The site's header is two stacked 50px rows (logo, then icons) with a
+ * charcoal gradient. Here it becomes one flat 56px row: logo left, icon
+ * buttons right, hairline below.
+ */
+
+/* ── header ───────────────────────────────────────────────────────────── */
+
+html.ccw-app body > header {
+  position: sticky;
+  /* body is padded by the status-bar inset (00-app-base); stick below it */
+  top: env(safe-area-inset-top, 0px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: var(--ccw-header-h);
+  padding: 0 8px 0 16px;
+  background: var(--ccw-surface) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid var(--ccw-line);
+  color: var(--ccw-text);
+}
+
+/* The strip behind the status bar takes the header colour while scrolling. */
+html.ccw-app body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--ccw-surface);
+  z-index: 51;
+}
+
+html.ccw-app body > header > nav {
+  display: flex;
+  align-items: center;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+/* Logo: flat, single colour, a touch smaller. */
+html.ccw-app body > header a.image:not(#jump_to_content) {
+  display: flex;
+  align-items: center;
+  height: var(--ccw-header-h);
+  padding: 0;
+}
+html.ccw-app body > header svg.menu_coaster_count {
+  width: 168px;
+  height: auto;
+  filter: none;
+}
+
+/* All header glyphs drop the gloss gradient and take the text colour.
+   (The site sets color:#fff on the navs, so set it on the svg itself.) */
+html.ccw-app body > header svg,
+html.ccw-app body > header use {
+  color: var(--ccw-text) !important;
+  fill: currentColor !important;
+  filter: none !important;
+}
+html.ccw-app body > header a,
+html.ccw-app body > header p.menu {
+  color: var(--ccw-text) !important;
+}
+
+/* Icon buttons: 44px targets with a quiet pressed/open state. */
+html.ccw-app body > header p.menu {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  border-radius: 50%;
+  background: transparent !important;
+  transition: background-color 160ms var(--ccw-ease);
+}
+html.ccw-app body > header p.menu svg {
+  width: 22px;
+  height: 22px;
+}
+html.ccw-app body > header p.menu:active,
+html.ccw-app body > header p.menu.active,
+html.ccw-app body > header p.menu[aria-expanded="true"] {
+  background: var(--ccw-surface-2) !important;
+}
+
+/* ── dropdown menus (#submenu_container > div.menu) ──────────────────── */
+
+html.ccw-app #submenu_container > div.menu {
+  position: fixed !important;
+  top: calc(env(safe-area-inset-top, 0px) + var(--ccw-header-h)) !important;
+  left: 0;
+  right: 0;
+  z-index: 49;
+  padding: 8px 0 12px;
+  background: var(--ccw-surface) !important;
+  background-image: none !important;
+  border-radius: 0 0 20px 20px !important;
+  box-shadow: var(--ccw-shadow-pop) !important;
+  text-align: left;
+}
+
+/* Section title ("Account", "Page"): a quiet heading, not a grey bar. */
+html.ccw-app #submenu_container > div.menu > span {
+  display: block;
+  padding: 10px 20px 6px;
+  background: none !important;
+  box-shadow: none !important;
+  color: var(--ccw-muted) !important;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+}
+
+html.ccw-app #submenu_container > div.menu > a {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 0 20px;
+  color: var(--ccw-text) !important;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  background: none !important;
+}
+html.ccw-app #submenu_container > div.menu > a + a {
+  border-top: 1px solid var(--ccw-line);
+}
+html.ccw-app #submenu_container > div.menu > a:active {
+  background: var(--ccw-surface-2) !important;
+}
+
+/* ── footer ───────────────────────────────────────────────────────────── */
+
+html.ccw-app body > footer {
+  padding: 16px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  background: var(--ccw-surface) !important;
+  background-image: none !important;
+  border-top: 1px solid var(--ccw-line);
+  color: var(--ccw-muted);
+  box-shadow: none !important;
+}
+html.ccw-app body > footer .font_small {
+  max-width: 34em;
+  margin: 0 auto 6px;
+  color: var(--ccw-muted) !important;
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+html.ccw-app body > footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0 4px;
+  height: auto;
+}
+html.ccw-app body > footer nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 10px;
+  color: var(--ccw-muted) !important;
+  font-size: 13px;
+  font-weight: 500;
+}
+html.ccw-app body > footer svg,
+html.ccw-app body > footer use {
+  color: var(--ccw-muted) !important;
+  width: 20px;
+  height: 20px;
+  fill: currentColor !important;
+  filter: none !important;
+}

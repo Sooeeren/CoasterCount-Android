@@ -1,0 +1,129 @@
+/*
+ * Home screen: one full-bleed screen, no scrolling.
+ *
+ * body:has(#stage) only matches the home page. The page becomes a column of
+ * header → stage (fills what's left) → footer, sized to the dynamic
+ * viewport. The site's JS writes pixel sizes onto #stage and #cover on every
+ * resize, hence the !important overrides.
+ */
+
+html.ccw-app body:has(#stage) {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+html.ccw-app body:has(#stage) > #main_content {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+html.ccw-app #stage {
+  flex: 1 1 auto;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0;
+  overflow: hidden;
+  isolation: isolate;
+  z-index: 0 !important; /* site uses -1, which would drop it behind our opaque body */
+}
+
+html.ccw-app #stage > img#cover {
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: 62% center;
+  z-index: -2;
+}
+
+/* Scrim: the photo stays, the type reads. */
+html.ccw-app #stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(8, 12, 18, 0.05) 0%, rgba(8, 12, 18, 0.25) 45%, rgba(8, 12, 18, 0.82) 100%);
+}
+
+/* Welcome block sits low on the screen, left-aligned, like an app intro. */
+html.ccw-app #stage > div {
+  inset: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 24px 28px;
+}
+html.ccw-app #stage > div > div.center {
+  top: auto !important;
+  transform: none !important;
+  text-align: left;
+}
+html.ccw-app #stage h2 {
+  margin: 0 0 10px;
+  color: rgba(255, 255, 255, 0.86) !important;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-shadow: none;
+}
+html.ccw-app #stage p.logo_coaster_count {
+  margin: 0;
+}
+html.ccw-app #stage p.logo_coaster_count svg {
+  width: min(100%, 340px);
+  height: auto;
+  filter: none;
+}
+html.ccw-app #stage p.logo_coaster_count svg,
+html.ccw-app #stage p.logo_coaster_count use {
+  fill: #ffffff !important;
+}
+
+/* Join / Log in actions added by features/10-home-actions.js */
+html.ccw-app .ccw-home-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+html.ccw-app .ccw-home-actions a {
+  flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  border-radius: var(--ccw-radius);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 140ms var(--ccw-ease), background-color 140ms var(--ccw-ease);
+}
+html.ccw-app .ccw-home-actions a:active {
+  transform: scale(0.98);
+}
+html.ccw-app .ccw-home-actions .ccw-primary {
+  background: #ffffff;
+  color: #0b1a2a !important;
+}
+html.ccw-app .ccw-home-actions .ccw-secondary {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+/* Footer on the home screen: links only, the legal line lives on every
+   other page. */
+html.ccw-app body:has(#stage) > footer {
+  flex: 0 0 auto;
+  padding-top: 4px;
+  padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
+}
+html.ccw-app body:has(#stage) > footer .font_small {
+  display: none;
+}

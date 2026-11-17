@@ -29,9 +29,20 @@ Android back button, session cookies and the site's own login all work out of th
 
 ## Custom styling
 
-Put CSS in `inject/styles/`. Files are bundled in alphabetical order (`00-app-base.css`,
-`10-theme.css`, …) and appended **after** the site's stylesheet. Scope rules under `html.ccw-app`
-so they only apply inside the app. Prefix a file with `_` to disable it.
+Put CSS in `inject/styles/`. Files are bundled in alphabetical order and appended **after** the
+site's stylesheet. Scope rules under `html.ccw-app` so they only apply inside the app. Prefix a
+file with `_` to disable it.
+
+| File | Covers |
+|---|---|
+| `00-app-base.css` | Safe-area insets (Android edge-to-edge), tap highlight, offline banner |
+| `10-theme.css` | Design tokens (`--ccw-*`) for light + dark, follows the system setting |
+| `20-chrome.css` | Single-row header, dropdown menus, footer |
+| `30-home.css` | Full-screen home (no scrolling), Log in / Join buttons |
+| `40-forms.css` | Full-screen login/popup sheet, inputs, buttons, selects |
+| `50-content.css` | Headings, tables, rankings filters, news; dark-mode repairs |
+
+Change colours in `10-theme.css` and the whole app follows.
 
 ## Custom features
 

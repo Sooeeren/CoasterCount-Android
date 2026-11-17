@@ -15,18 +15,14 @@ html.ccw-app {
 /*
  * Android 15+ forces edge-to-edge (targetSdk ≥ 35): the page is drawn under
  * the status bar and gesture bar. The site's header/footer are static, so
- * padding the body by the safe-area insets keeps them clear, and the root
- * background (header colour) fills the bar areas.
+ * padding the body by the safe-area insets keeps them clear. Colours for the
+ * bar areas come from the theme (10-theme, 20-chrome).
  */
-html.ccw-app {
-  background-color: #3f3f3f;
-}
-
 html.ccw-app body {
   /* Kill the rubber-band glow at the scroll edges. */
   overscroll-behavior-y: none;
   padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  /* bottom inset is added to the footer instead, so it fills the gesture bar */
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
   box-sizing: border-box;

@@ -8,3 +8,4 @@ src-tauri/gen/android/local.properties
 src-tauri/gen/android/keystore.properties
 *.jks
 *.keystore
+.impeccable/hook.cache.json
