@@ -1,0 +1,20 @@
+/*
+ * Custom theme — this is where the restyling work goes.
+ *
+ * Tips
+ *  - Scope rules under `html.ccw-app` so they only apply inside the app and
+ *    beat the site's own selectors on specificity.
+ *  - Our <style> is appended after the site's stylesheet, so equal-specificity
+ *    rules already win; reach for !important only when the site uses it.
+ *  - Inspect the live site with chrome://inspect (debug APK) or a desktop
+ *    browser at https://coaster-count.com to find selectors.
+ *  - Add more files (20-header.css, 30-lists.css, …) — they're bundled in
+ *    alphabetical order. Prefix with `_` to disable a file.
+ */
+
+html.ccw-app {
+  /* Design tokens — wire these into rules below as the theme grows. */
+  --ccw-accent: #e4572e;
+  --ccw-bg: #3f3f3f; /* matches the site's theme-color today */
+  --ccw-radius: 10px;
+}

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#3f3f3f" />
+    <title>Coaster-Count</title>
+    <style>
+      :root { color-scheme: dark; }
+      html, body { height: 100%; margin: 0; }
+      body {
+        background: #3f3f3f;
+        color: #f2f2f2;
+        font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: env(safe-area-inset-top) 24px env(safe-area-inset-bottom);
+        box-sizing: border-box;
+      }
+      img { width: 96px; height: 96px; border-radius: 22px; }
+      .spinner {
+        width: 28px; height: 28px; margin: 28px auto 0;
+        border: 3px solid rgba(255,255,255,.2); border-top-color: #fff;
+        border-radius: 50%; animation: spin .8s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      #offline { display: none; }
+      body.is-offline #loading { display: none; }
+      body.is-offline #offline { display: block; }
+      h1 { font-size: 20px; margin: 20px 0 8px; }
+      p { opacity: .75; margin: 0 0 24px; }
+      button {
+        font: inherit; font-weight: 600; color: #3f3f3f; background: #fff;
+        border: 0; border-radius: 999px; padding: 12px 28px; min-height: 44px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="icon.png" alt="" />
+      <div id="loading"><div class="spinner" role="status" aria-label="Loading"></div></div>
+      <div id="offline">
+        <h1>You're offline</h1>
+        <p>Coaster-Count needs an internet connection.</p>
+        <button id="retry" type="button">Try again</button>
+      </div>
+    </main>
+    <script>
+      // Splash + offline fallback. Hands over to the live site as soon as the
+      // network is up; location.replace keeps this page out of back history.
+      (function () {
+        var START_URL = 'https://coaster-count.com/';
+
+        function go() {
+          document.body.classList.remove('is-offline');
+          if (navigator.onLine === false) return showOffline();
+          // Probe reachability first so a dead connection shows our screen
+          // rather than the WebView's raw error page.
+          var ctrl = 'AbortController' in window ? new AbortController() : null;
+          var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 8000);
+          fetch(START_URL + 'favicon.ico', { mode: 'no-cors', cache: 'no-store', signal: ctrl && ctrl.signal })
+            .then(function () { clearTimeout(timer); location.replace(START_URL); })
+            .catch(function () { clearTimeout(timer); showOffline(); });
+        }
+        function showOffline() { document.body.classList.add('is-offline'); }
+
+        document.getElementById('retry').addEventListener('click', go);
+        window.addEventListener('online', go);
+        go();
+      })();
+    </script>
+  </body>
+</html>

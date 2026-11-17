@@ -1,0 +1,13 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "remote-site",
+  "description": "What the live coaster-count.com pages may call. Keep this list minimal: anything granted here is reachable by any script running on the site.",
+  "windows": ["main"],
+  "remote": {
+    "urls": ["https://coaster-count.com", "https://*.coaster-count.com"]
+  },
+  "permissions": [
+    "allow-app-info",
+    "allow-open-external"
+  ]
+}
