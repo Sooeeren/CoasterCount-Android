@@ -23,9 +23,47 @@ html.ccw-app body {
   overscroll-behavior-y: none;
   padding-top: env(safe-area-inset-top, 0px);
   /* bottom inset is added to the footer instead, so it fills the gesture bar */
+
+  /* Sticky footer the robust way: the site gives #main_content a fixed
+     min-height tuned to its old 100px header, which left a big empty gap
+     below short pages. A flex column fills the screen exactly instead. */
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  box-sizing: border-box;
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
   box-sizing: border-box;
+}
+
+html.ccw-app #main_content {
+  flex: 1 0 auto;
+  min-height: 0 !important;
+  display: flex;
+  flex-direction: column;
+}
+/* On short pages the last section stretches to the footer, so no strip of
+   page background shows between content and footer. */
+html.ccw-app #main_content > :last-child {
+  flex-grow: 1;
+}
+/* Flex items may not grow wider than the screen because of wide content. */
+html.ccw-app #main_content > * {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  /* the site centres sections with margin:auto, which in a flex column
+     would shrink them to their content width */
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  align-self: stretch;
+}
+
+/* Nothing may widen the page: no sideways scrolling, ever. */
+html.ccw-app,
+html.ccw-app body {
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 /* Banner shown by core.js while the device is offline. */

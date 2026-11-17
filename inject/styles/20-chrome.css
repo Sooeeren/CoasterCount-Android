@@ -71,9 +71,33 @@ html.ccw-app body > header p.menu {
   color: var(--ccw-text) !important;
 }
 
-/* Icon buttons: 44px targets with a quiet pressed/open state. */
-html.ccw-app body > header p.menu {
+/* Signed in, the header carries up to six icons (catalogue, nearby, ranking,
+   account, more, search). Logo and icons shrink a little so all fit on a
+   360px-wide phone without the row overflowing. */
+html.ccw-app body > header:has(> nav > a.image.show_mobile) svg.menu_coaster_count {
+  width: 124px;
+}
+html.ccw-app body > header:has(> nav > a.image.show_mobile) {
+  padding-left: 12px;
+  padding-right: 4px;
+}
+html.ccw-app body > header > nav:last-of-type {
+  flex: 0 1 auto;
+  min-width: 0;
+  gap: 0;
+}
+
+/* Respect the site's own mobile visibility switches. */
+html.ccw-app body > header .hide_mobile,
+html.ccw-app body > header > nav p.menu.hide_mobile {
+  display: none !important;
+}
+
+/* Icon buttons: 40-44px targets with a quiet pressed/open state. */
+html.ccw-app body > header p.menu,
+html.ccw-app body > header > nav a.image.show_mobile {
   display: inline-flex !important;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   width: 44px;
@@ -83,9 +107,20 @@ html.ccw-app body > header p.menu {
   background: transparent !important;
   transition: background-color 160ms var(--ccw-ease);
 }
-html.ccw-app body > header p.menu svg {
+html.ccw-app body > header p.menu svg,
+html.ccw-app body > header > nav a.image.show_mobile svg {
   width: 22px;
   height: 22px;
+}
+html.ccw-app body > header:has(> nav > a.image.show_mobile) p.menu,
+html.ccw-app body > header:has(> nav > a.image.show_mobile) > nav a.image.show_mobile {
+  width: 40px;
+  height: 40px;
+}
+html.ccw-app body > header:has(> nav > a.image.show_mobile) p.menu svg,
+html.ccw-app body > header:has(> nav > a.image.show_mobile) > nav a.image.show_mobile svg {
+  width: 20px;
+  height: 20px;
 }
 html.ccw-app body > header p.menu:active,
 html.ccw-app body > header p.menu.active,
@@ -107,36 +142,81 @@ html.ccw-app #submenu_container > div.menu {
   border-radius: 0 0 20px 20px !important;
   box-shadow: var(--ccw-shadow-pop) !important;
   text-align: left;
+  /* Signed-in menus are long (Account, More): scroll inside the panel. */
+  max-height: calc(100dvh - env(safe-area-inset-top, 0px) - var(--ccw-header-h) - 24px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
-/* Section title ("Account", "Page"): a quiet heading, not a grey bar. */
-html.ccw-app #submenu_container > div.menu > span {
+/* Menus nest their links in wrapper divs and carry desktop-only columns
+   (e.g. the map links in "Roller coasters"). */
+html.ccw-app #submenu_container div.menu .show_desktop,
+html.ccw-app #submenu_container div.menu .hide_mobile {
+  display: none !important;
+}
+html.ccw-app #submenu_container div.menu > div {
+  display: block !important;
+  float: none !important;
+  width: 100% !important;
+  max-width: none !important;
+  border: 0 !important;
+  background: none !important;
+}
+
+/* Section titles ("Account", "Continents", …): quiet headings, not grey bars. */
+html.ccw-app #submenu_container div.menu span:not(.new) {
   display: block;
-  padding: 10px 20px 6px;
+  padding: 18px 20px 6px;
   background: none !important;
   box-shadow: none !important;
+  border: 0 !important;
   color: var(--ccw-muted) !important;
   font-size: 13px;
   font-weight: 600;
   text-align: left;
 }
+html.ccw-app #submenu_container div.menu > span:first-child,
+html.ccw-app #submenu_container div.menu > div:first-child > span:first-child {
+  padding-top: 10px;
+}
 
-html.ccw-app #submenu_container > div.menu > a {
+html.ccw-app #submenu_container div.menu a {
+  position: relative;
   display: flex;
   align-items: center;
+  gap: 12px;
   min-height: 52px;
   padding: 0 20px;
+  border: 0 !important;
   color: var(--ccw-text) !important;
   font-size: 16px;
   font-weight: 500;
   text-align: left;
   background: none !important;
+  box-shadow: none !important;
 }
-html.ccw-app #submenu_container > div.menu > a + a {
-  border-top: 1px solid var(--ccw-line);
+html.ccw-app #submenu_container div.menu a + a {
+  border-top: 1px solid var(--ccw-line) !important;
 }
-html.ccw-app #submenu_container > div.menu > a:active {
+html.ccw-app #submenu_container div.menu a:active {
   background: var(--ccw-surface-2) !important;
+}
+
+/* "New" count badges (698 catalogue updates, 143 friend records). */
+html.ccw-app #submenu_container div.menu span.new,
+html.ccw-app #main_content span.new {
+  position: static !important;
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 999px !important;
+  background: var(--ccw-brand) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: var(--ccw-on-brand) !important;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 18px;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── footer ───────────────────────────────────────────────────────────── */

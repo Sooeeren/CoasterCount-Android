@@ -17,9 +17,92 @@ html.ccw-app #main_content section.one_column {
   box-shadow: none !important;
   border-bottom: 1px solid var(--ccw-line);
 }
-/* The site opens every page with 60px of air above the title. */
-html.ccw-app #main_content > section:first-child {
-  padding-top: 20px !important;
+/* The site opens every section with 60px of air above the title. */
+html.ccw-app #main_content > section {
+  padding-top: 24px !important;
+}
+
+/* Signed-in home: counts (Real / Personal / All) and the two link stats
+   (catalogue updates, friends' records) as calm stat rows. */
+html.ccw-app #main_content p.values {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  gap: 20px 8px;
+  margin: 12px 0 0;
+  padding: 16px 0 0;
+  border-top: 1px solid var(--ccw-line);
+  text-align: center;
+}
+html.ccw-app #main_content p.values:empty {
+  display: none;
+}
+html.ccw-app #main_content p.values.big {
+  border-top: 0;
+  padding-top: 4px;
+}
+/* Row label in breakdown stats ("Location", "Type", …). */
+html.ccw-app #main_content p.values > label {
+  flex: 0 0 100%;
+  margin: 0;
+  color: var(--ccw-text);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+}
+html.ccw-app #main_content p.values > span {
+  display: flex;
+  /* even three-column grid; rows of two spread evenly */
+  flex: 0 1 calc(33.333% - 8px);
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  width: auto !important;
+}
+html.ccw-app #main_content p.values > span > :first-child:not(:last-child) {
+  display: block;
+  overflow-wrap: anywhere;
+  padding: 0 !important;
+  border: 0 !important;
+  color: var(--ccw-muted) !important;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+html.ccw-app #main_content p.values > span > a:not(:last-child) {
+  color: var(--ccw-link) !important;
+  font-size: 13px !important;
+  font-weight: 600;
+  line-height: 1.35;
+}
+html.ccw-app #main_content p.values > span > :last-child {
+  color: var(--ccw-text) !important;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+}
+html.ccw-app #main_content p.values > span.big > :last-child {
+  color: var(--ccw-link) !important;
+  font-size: 44px;
+}
+html.ccw-app #main_content p.values > span > a:last-child {
+  color: var(--ccw-link) !important;
+}
+html.ccw-app #main_content h1 span.openi {
+  width: 28px !important;
+  height: 28px !important;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* Header photo on the signed-in home. */
+html.ccw-app #panorama_container img {
+  display: block;
 }
 
 html.ccw-app #main_content section.no_background {
@@ -65,8 +148,9 @@ html.ccw-app #main_content li {
   color: var(--ccw-text);
   line-height: 1.6;
 }
-html.ccw-app #main_content .font_small {
-  color: var(--ccw-muted);
+html.ccw-app #main_content .font_small,
+html.ccw-app .color_grey {
+  color: var(--ccw-muted) !important;
 }
 
 html.ccw-app #main_content a:not(.button):not([class*="bg_color"]):not([class^="ccw-"]) {

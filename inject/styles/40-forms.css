@@ -293,6 +293,60 @@ html.ccw-app optgroup {
   color: var(--ccw-text);
 }
 
+/* Every other coloured site button (red delete, light grey, black links):
+   flat, rounded, no gloss — keeping the site's own colour. */
+html.ccw-app button[class*="bg_color"],
+html.ccw-app a.button[class*="bg_color"] {
+  border-radius: var(--ccw-radius-sm) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+html.ccw-app button[class*="bg_color"]::before,
+html.ccw-app a.button[class*="bg_color"]::before {
+  background: none !important;
+  box-shadow: none !important;
+}
+html.ccw-app button.bg_color_lgrey {
+  background-color: var(--ccw-surface-2) !important;
+  color: var(--ccw-text) !important;
+}
+html.ccw-app #main_content span.openh {
+  color: var(--ccw-link) !important;
+}
+
+/* Other site buttons: black "action" buttons, white toggle buttons. */
+html.ccw-app button.bg_color_black,
+html.ccw-app a.button.bg_color_black,
+html.ccw-app button.bg_color_white,
+html.ccw-app button.switch {
+  border-radius: var(--ccw-radius-sm) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+html.ccw-app button.bg_color_black,
+html.ccw-app a.button.bg_color_black {
+  background-color: var(--ccw-text) !important;
+  color: var(--ccw-bg) !important;
+}
+html.ccw-app button.bg_color_white,
+html.ccw-app button.switch:not(.bg_color_dblue) {
+  border: 1px solid var(--ccw-line) !important;
+  background-color: var(--ccw-surface) !important;
+  color: var(--ccw-text) !important;
+}
+html.ccw-app button.bg_color_black::before,
+html.ccw-app button.bg_color_white::before,
+html.ccw-app button.switch::before {
+  background: none !important;
+  box-shadow: none !important;
+}
+html.ccw-app button svg,
+html.ccw-app button use {
+  fill: currentColor !important;
+}
+
 html.ccw-app a.button.switch {
   display: inline-flex;
   align-items: center;
