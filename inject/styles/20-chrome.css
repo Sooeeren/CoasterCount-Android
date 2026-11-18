@@ -123,9 +123,10 @@ html.ccw-app body > header > nav:not(:first-of-type) > a.image.show_mobile {
   align-items: center;
   justify-content: center;
   min-width: 48px;
-  height: 48px;
+  /* !important: the site sizes and zeroes the padding of the Search link */
+  height: 48px !important;
   margin: 0;
-  padding: 0 12px;
+  padding: 0 12px !important;
   box-sizing: border-box;
   border-radius: 18px;
   background: transparent !important;
@@ -154,6 +155,7 @@ html.ccw-app body > header > nav:not(:first-of-type) > a.image.show_mobile svg {
   flex: 0 0 auto;
   width: 22px;
   height: 22px;
+  margin: 0 !important; /* the site gives the Search icon a 14px margin */
 }
 html.ccw-app body > header > nav:not(:first-of-type) > p svg,
 html.ccw-app body > header > nav:not(:first-of-type) > p use,
@@ -191,7 +193,7 @@ html.ccw-app body > header > nav > * > .ccw-tab-label {
 html.ccw-app body > header > nav:not(:first-of-type) > p.ccw-tab-open,
 html.ccw-app body > header > nav:not(:first-of-type):not(.ccw-menu-open) > .ccw-tab-current.ccw-tab-current {
   flex-shrink: 0;
-  padding: 0 16px 0 14px;
+  padding: 0 16px 0 14px !important;
   background: color-mix(in srgb, var(--ccw-accent) 16%, transparent) !important;
   color: var(--ccw-accent) !important;
 }
