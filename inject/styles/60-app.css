@@ -212,7 +212,7 @@ html.ccw-app .ccw-update-banner {
   position: fixed;
   left: 12px;
   right: 12px;
-  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  bottom: var(--ccw-tabbar-space); /* just above the floating nav */
   z-index: 2500;
   display: flex;
   align-items: center;

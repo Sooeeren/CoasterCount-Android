@@ -99,6 +99,59 @@ html.ccw-app #popup > header svg use {
   fill: var(--ccw-text) !important;
 }
 
+/* Coaster / park popups carry tabs (Coaster · RCDB · Satellite · Riders ·
+   Pictures) behind a ☰ button on the left of the title bar. In the app the
+   tabs are always shown as a scrolling row of pills under the title, so the
+   ☰ and the "current tab" caption go; only ✕ stays, on the right. */
+html.ccw-app #popup > header svg.menu,
+html.ccw-app #popup > header > p.show_mobile {
+  display: none !important;
+}
+html.ccw-app #popup > header > nav {
+  position: static !important;
+  display: flex !important;
+  /* the site's "closed" state slides the row up behind the title */
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  gap: 8px;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 16px 12px !important;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--ccw-surface) !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+html.ccw-app #popup > header > nav::-webkit-scrollbar {
+  display: none;
+}
+html.ccw-app #popup > header > nav > a {
+  flex: 0 0 auto;
+  display: inline-flex !important;
+  align-items: center;
+  width: auto !important;
+  height: 36px !important;
+  margin: 0 !important;
+  padding: 0 14px !important;
+  border: 1px solid var(--ccw-line) !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: var(--ccw-text) !important;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+html.ccw-app #popup > header > nav > a.bg_color_mblue {
+  border-color: transparent !important;
+  background: var(--ccw-brand) !important;
+  color: var(--ccw-on-brand) !important;
+}
+
 html.ccw-app #popup_content {
   padding: 8px 20px 24px !important;
   text-align: left;

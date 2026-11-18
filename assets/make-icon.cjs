@@ -5,7 +5,7 @@
 //
 // The mark (a rounded square with a coaster car cut out) is taken from the
 // site's SVG sprite (https://coaster-count.com/static/svg/ui.svg, symbol
-// "coaster_count_logo") and drawn white on brand blue. It's sized to ~44% of
+// "coaster_count_logo") and drawn white on brand blue. It is sized to ~36% of
 // the canvas so it stays inside Android's adaptive-icon safe zone (the
 // launcher may crop to a circle, squircle or rounded square).
 //
@@ -17,7 +17,7 @@ const { Resvg } = require('@resvg/resvg-js');
 
 const BRAND = '#004a80';
 const SIZE = 1024;
-const MARK_FRACTION = 0.44;
+const MARK_FRACTION = 0.36;
 
 const sprite = fs.readFileSync(process.argv[2], 'utf8');
 const m = /<path[^>]*id="coaster_count_logo"[^>]*\sd="([^"]+)"/s.exec(sprite);

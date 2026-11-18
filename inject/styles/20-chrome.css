@@ -2,8 +2,14 @@
  * App chrome: header, dropdown menus, footer.
  *
  * The site's header is two stacked 50px rows (logo, then icons) with a
- * charcoal gradient. Here it becomes one flat 56px row: logo left, icon
- * buttons right, hairline below.
+ * charcoal gradient. Here it becomes one flat 56px row with just the logo,
+ * and the icon row moves into a floating pill at the bottom of the screen
+ * (a bottom nav bar). The site's own menus open as sheets above that pill.
+ *
+ * The DOM stays the site's: its script binds the icon buttons
+ * (`header > nav > p`) and moves each one's menu into #submenu_container, so
+ * this is all CSS. features/40-bottom-nav.js only adds the "current
+ * section" highlight and accessible labels.
  */
 
 /* ── header ───────────────────────────────────────────────────────────── */
@@ -67,85 +73,199 @@ html.ccw-app body > header use {
   filter: none !important;
 }
 html.ccw-app body > header a,
-html.ccw-app body > header p.menu {
+html.ccw-app body > header p.menu, html.ccw-app body > header > nav > p {
   color: var(--ccw-text) !important;
-}
-
-/* Signed in, the header carries up to six icons (catalogue, nearby, ranking,
-   account, more, search). Logo and icons shrink a little so all fit on a
-   360px-wide phone without the row overflowing. */
-html.ccw-app body > header:has(> nav > a.image.show_mobile) svg.menu_coaster_count {
-  width: 124px;
-}
-html.ccw-app body > header:has(> nav > a.image.show_mobile) {
-  padding-left: 12px;
-  padding-right: 4px;
-}
-html.ccw-app body > header > nav:last-of-type {
-  flex: 0 1 auto;
-  min-width: 0;
-  gap: 0;
 }
 
 /* Respect the site's own mobile visibility switches. */
 html.ccw-app body > header .hide_mobile,
-html.ccw-app body > header > nav p.menu.hide_mobile {
+html.ccw-app body > header > nav p.hide_mobile {
   display: none !important;
 }
 
-/* Icon buttons: 40-44px targets with a quiet pressed/open state. */
-html.ccw-app body > header p.menu,
-html.ccw-app body > header > nav a.image.show_mobile {
+/* ── floating bottom nav ──────────────────────────────────────────────── */
+
+/* The header's icon row: every nav after the logo that the site shows on
+   phones. Signed out that is Coasters · Ranking · Page · Account; signed in
+   Coasters · Nearby · Ranking · Account · More · Search. Fixed positioning
+   lifts it out of the header, which keeps only the logo. */
+html.ccw-app body > header > nav:not(:first-of-type):not(.hide_mobile) {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--ccw-tabbar-gap) + env(safe-area-inset-bottom, 0px));
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px;
+  box-sizing: border-box;
+  width: min(calc(100% - 2 * var(--ccw-tabbar-gap)), 440px);
+  height: var(--ccw-tabbar-h);
+  margin: 0 auto;
+  padding: 8px;
+  border: 1px solid var(--ccw-tabbar-line);
+  border-radius: 26px;
+  background: var(--ccw-tabbar-bg);
+  background: color-mix(in srgb, var(--ccw-tabbar-bg) 88%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  backdrop-filter: blur(20px) saturate(1.6);
+  box-shadow: var(--ccw-shadow-pop);
+  transition: transform 220ms var(--ccw-ease), opacity 220ms var(--ccw-ease);
+}
+
+/* Tabs: quiet icons; the active one grows into a tinted pill with its
+   label (added by features/40-bottom-nav.js). */
+html.ccw-app body > header > nav:not(:first-of-type) > p,
+html.ccw-app body > header > nav:not(:first-of-type) > a.image.show_mobile {
   display: inline-flex !important;
-  flex: 0 0 auto;
+  flex: 0 1 auto;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  min-width: 48px;
+  height: 48px;
   margin: 0;
-  border-radius: 50%;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border-radius: 18px;
   background: transparent !important;
-  transition: background-color 160ms var(--ccw-ease);
+  color: var(--ccw-tabbar-icon) !important;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 260ms var(--ccw-ease), padding 260ms var(--ccw-ease),
+    transform 120ms var(--ccw-ease);
 }
-html.ccw-app body > header p.menu svg,
-html.ccw-app body > header > nav a.image.show_mobile svg {
+html.ccw-app body > header > nav > * { --ccw-accent: var(--ccw-accent-0); }
+/* Desktop-only tabs (Community, Page: their links are in More anyway) and
+   tabs folded into another tab's sheet by 40-bottom-nav.js. */
+html.ccw-app body > header > nav:not(:first-of-type) > p.hide_mobile,
+html.ccw-app body > header > nav:not(:first-of-type) > p.ccw-tab-merged {
+  display: none !important;
+}
+
+html.ccw-app body > header > nav > [data-ccw-accent="1"] { --ccw-accent: var(--ccw-accent-1); }
+html.ccw-app body > header > nav > [data-ccw-accent="2"] { --ccw-accent: var(--ccw-accent-2); }
+html.ccw-app body > header > nav > [data-ccw-accent="3"] { --ccw-accent: var(--ccw-accent-3); }
+html.ccw-app body > header > nav > [data-ccw-accent="4"] { --ccw-accent: var(--ccw-accent-4); }
+html.ccw-app body > header > nav > [data-ccw-accent="5"] { --ccw-accent: var(--ccw-accent-5); }
+
+html.ccw-app body > header > nav:not(:first-of-type) > p svg,
+html.ccw-app body > header > nav:not(:first-of-type) > a.image.show_mobile svg {
+  flex: 0 0 auto;
   width: 22px;
   height: 22px;
 }
-html.ccw-app body > header:has(> nav > a.image.show_mobile) p.menu,
-html.ccw-app body > header:has(> nav > a.image.show_mobile) > nav a.image.show_mobile {
-  width: 40px;
-  height: 40px;
+html.ccw-app body > header > nav:not(:first-of-type) > p svg,
+html.ccw-app body > header > nav:not(:first-of-type) > p use,
+html.ccw-app body > header > nav:not(:first-of-type) > a.image.show_mobile svg,
+html.ccw-app body > header > nav:not(:first-of-type) > a.image.show_mobile use {
+  color: inherit !important;
+  transition: color 260ms var(--ccw-ease);
 }
-html.ccw-app body > header:has(> nav > a.image.show_mobile) p.menu svg,
-html.ccw-app body > header:has(> nav > a.image.show_mobile) > nav a.image.show_mobile svg {
-  width: 20px;
-  height: 20px;
-}
-html.ccw-app body > header p.menu:active,
-html.ccw-app body > header p.menu.active,
-html.ccw-app body > header p.menu[aria-expanded="true"] {
-  background: var(--ccw-surface-2) !important;
+html.ccw-app body > header > nav:not(:first-of-type) > p:active,
+html.ccw-app body > header > nav:not(:first-of-type) > a.image.show_mobile:active {
+  transform: scale(0.94);
 }
 
-/* ── dropdown menus (#submenu_container > div.menu) ──────────────────── */
+/* Label: collapsed to nothing until its tab is active. */
+html.ccw-app body > header > nav > * > .ccw-tab-label {
+  display: block;
+  max-width: 0;
+  margin-left: 0;
+  padding: 0 !important; /* the site pads and colours `nav p span` */
+  color: inherit !important;
+  line-height: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  opacity: 0;
+  font-family: Montserrat, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: max-width 260ms var(--ccw-ease), margin 260ms var(--ccw-ease), opacity 200ms var(--ccw-ease);
+}
 
+/* Active = the tab whose menu is open (.ccw-tab-open), else the section
+   you're in (.ccw-tab-current). Both classes come from 40-bottom-nav.js. */
+html.ccw-app body > header > nav:not(:first-of-type) > p.ccw-tab-open,
+html.ccw-app body > header > nav:not(:first-of-type):not(.ccw-menu-open) > .ccw-tab-current.ccw-tab-current {
+  flex-shrink: 0;
+  padding: 0 16px 0 14px;
+  background: color-mix(in srgb, var(--ccw-accent) 16%, transparent) !important;
+  color: var(--ccw-accent) !important;
+}
+html.ccw-app body > header > nav > p.ccw-tab-open .ccw-tab-label,
+html.ccw-app body > header > nav:not(.ccw-menu-open) > .ccw-tab-current .ccw-tab-label {
+  max-width: 120px;
+  margin-left: 8px;
+  opacity: 1;
+}
+
+/* While the on-screen keyboard is up it pushes fixed elements up: get the
+   bar out of the way so it doesn't sit on top of the field. html.ccw-keyboard
+   is set by 40-bottom-nav.js from the viewport height, not from focus: pages
+   like Search focus their field on load without opening the keyboard. */
+html.ccw-app.ccw-keyboard body > header > nav:not(:first-of-type):not(.hide_mobile) {
+  transform: translateY(calc(100% + 2 * var(--ccw-tabbar-gap) + env(safe-area-inset-bottom, 0px)));
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Signed out (the site marks <body class="anonymous">): no navigation at
+   all. The header is just the logo and the home screen is a login landing
+   (Log in / Join from features/10-home-actions.js). The site's menus stay
+   in the DOM, hidden, because the Log in button clicks the site's own
+   login link inside them. */
+/* But the site also serves some cached pages (News, About, …) marked
+   anonymous to signed-in users, so "signed out" = anonymous AND no profile
+   tab (menu_user) in the header. */
+html.ccw-app body.anonymous:not(:has(> header use[*|href$="#menu_user"])) {
+  --ccw-tabbar-space: calc(12px + env(safe-area-inset-bottom, 0px));
+}
+html.ccw-app body.anonymous:not(:has(> header use[*|href$="#menu_user"])) > header > nav:not(:first-of-type),
+html.ccw-app body.anonymous:not(:has(> header use[*|href$="#menu_user"])) #submenu_container {
+  display: none !important;
+}
+
+/* ── menus (#submenu_container > div.menu) ───────────────────────────── */
+
+/* Each tab's menu opens as a floating sheet just above the bar. The site
+   writes top/left inline when it opens one, hence the !important. */
 html.ccw-app #submenu_container > div.menu {
   position: fixed !important;
-  top: calc(env(safe-area-inset-top, 0px) + var(--ccw-header-h)) !important;
-  left: 0;
-  right: 0;
+  top: auto !important;
+  bottom: calc(var(--ccw-tabbar-space) - var(--ccw-tabbar-gap) + 8px) !important;
+  left: 0 !important;
+  right: 0 !important;
   z-index: 49;
-  padding: 8px 0 12px;
+  box-sizing: border-box;
+  width: min(calc(100% - 2 * var(--ccw-tabbar-gap)), 440px) !important;
+  margin: 0 auto !important;
+  padding: 8px 0 !important;
+  border: 1px solid var(--ccw-line) !important;
   background: var(--ccw-surface) !important;
   background-image: none !important;
-  border-radius: 0 0 20px 20px !important;
+  border-radius: 24px !important;
   box-shadow: var(--ccw-shadow-pop) !important;
   text-align: left;
-  /* Signed-in menus are long (Account, More): scroll inside the panel. */
-  max-height: calc(100dvh - env(safe-area-inset-top, 0px) - var(--ccw-header-h) - 24px);
+  transform-origin: bottom center;
+  animation: ccw-menu-in 220ms var(--ccw-ease);
+  /* Signed-in menus are long (Account, More): scroll inside the sheet. */
+  max-height: calc(100dvh - env(safe-area-inset-top, 0px) - var(--ccw-header-h) - var(--ccw-tabbar-space) - 8px);
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+@keyframes ccw-menu-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+}
+/* With the bar hidden while typing (search), the sheet drops to the bottom. */
+html.ccw-app.ccw-keyboard #submenu_container > div.menu {
+  bottom: calc(var(--ccw-tabbar-gap) + env(safe-area-inset-bottom, 0px)) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.ccw-app #submenu_container > div.menu { animation: none; }
+  html.ccw-app body > header > nav { transition: none !important; }
 }
 
 /* Menus nest their links in wrapper divs and carry desktop-only columns
@@ -222,7 +342,8 @@ html.ccw-app #main_content span.new {
 /* ── footer ───────────────────────────────────────────────────────────── */
 
 html.ccw-app body > footer {
-  padding: 16px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  /* the bottom padding keeps the last links clear of the floating nav */
+  padding: 16px 16px var(--ccw-tabbar-space);
   background: var(--ccw-surface) !important;
   background-image: none !important;
   border-top: 1px solid var(--ccw-line);

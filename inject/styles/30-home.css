@@ -124,13 +124,79 @@ html.ccw-app .ccw-home-actions .ccw-secondary {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
 }
 
-/* Footer on the home screen: links only, the legal line lives on every
-   other page. */
-html.ccw-app body:has(#stage) > footer {
-  flex: 0 0 auto;
-  padding-top: 4px;
-  padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
+/* Signed in: the photo runs full-bleed to the bottom edge, behind the
+   floating nav.
+   The welcome block keeps clear of the nav and the footer links. */
+html.ccw-app body:not(.anonymous):has(#stage) {
+  position: relative;
 }
-html.ccw-app body:has(#stage) > footer .font_small {
+html.ccw-app body:not(.anonymous):has(#stage) #stage > div {
+  padding-bottom: calc(var(--ccw-tabbar-space) + 44px);
+}
+
+/* Footer on the home screen: one quiet row of light links lying on the
+   photo just above the nav (the legal line lives on every other page). */
+html.ccw-app body:not(.anonymous):has(#stage) > footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--ccw-tabbar-space) - var(--ccw-tabbar-gap));
+  z-index: 1;
+  padding: 0 16px;
+  background: none !important;
+  border-top: 0;
+}
+html.ccw-app body:not(.anonymous):has(#stage) > footer .font_small,
+html.ccw-app body:not(.anonymous):has(#stage) > footer nav:empty {
   display: none;
+}
+/* left-aligned with the welcome block (24px: 16 here + 8 on each link) */
+html.ccw-app body:not(.anonymous):has(#stage) > footer nav {
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 0;
+}
+html.ccw-app body:not(.anonymous):has(#stage) > footer nav a {
+  min-height: 40px;
+  padding: 0 8px;
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-size: 12px;
+}
+/* social icons: compact 36px targets, pushed to the right edge */
+html.ccw-app body:not(.anonymous):has(#stage) > footer nav a.image {
+  justify-content: center;
+  width: 36px !important;
+  padding: 0;
+}
+html.ccw-app body:not(.anonymous):has(#stage) > footer nav a:not(.image) + a.image {
+  margin-left: auto;
+}
+html.ccw-app body:not(.anonymous):has(#stage) > footer svg,
+html.ccw-app body:not(.anonymous):has(#stage) > footer use {
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+/* Signed out there is no nav: the home is a login landing, photo above and
+   the footer links in a slim strip below it. */
+html.ccw-app body.anonymous:has(#stage) > footer {
+  flex: 0 0 auto;
+  padding: 4px 16px calc(4px + env(safe-area-inset-bottom, 0px));
+}
+html.ccw-app body.anonymous:has(#stage) > footer .font_small,
+html.ccw-app body.anonymous:has(#stage) > footer nav:empty {
+  display: none;
+}
+html.ccw-app body.anonymous:has(#stage) > footer nav {
+  flex-wrap: nowrap;
+}
+html.ccw-app body.anonymous:has(#stage) > footer nav a.image {
+  justify-content: center;
+  width: 44px !important;
+  padding: 0;
+}
+html.ccw-app body.anonymous:has(#stage) > footer svg {
+  margin: 0 !important;
 }

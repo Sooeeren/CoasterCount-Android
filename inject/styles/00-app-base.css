@@ -67,17 +67,30 @@ html.ccw-app body {
 }
 
 /* Banner shown by core.js while the device is offline. */
+/* A toast just above the floating nav (which stays usable underneath). */
 #ccw-offline {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: 12px;
+  right: 12px;
+  bottom: var(--ccw-tabbar-space, calc(12px + env(safe-area-inset-bottom)));
   z-index: 2147483647;
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  padding: 12px 16px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35);
   background: #222;
   color: #fff;
   font: 14px/1.3 system-ui, sans-serif;
   text-align: center;
+}
+
+/* features/90-offline-links.js: a tapped link was held back while offline. */
+#ccw-offline.ccw-pulse {
+  animation: ccw-offline-pulse 600ms ease;
+}
+@keyframes ccw-offline-pulse {
+  0%, 100% { transform: none; }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
 }
 
 /* The site advertises its iOS app — pointless inside our app. */

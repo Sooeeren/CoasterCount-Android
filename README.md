@@ -35,7 +35,7 @@ You can also check any time under **ⓘ / ⋯ → About this app**.
 
 ## What's different from the website
 
-- **Feels like an app.** A one-row header, flat menus, a full-screen login, roomy touch targets and no sideways scrolling.
+- **Feels like an app.** A floating bottom nav bar with menus that open above it, a slim logo header, a full-screen login, roomy touch targets and no sideways scrolling.
 - **Light and dark.** Follows your system setting, including the parts of the site that hard-code dark icons.
 - **The home screen fits one screen,** with Log in / Join right there when you're signed out.
 - **Links to other sites** (RCDB, maps, PayPal, social) open in your browser; the app stays on Coaster-Count.
@@ -80,7 +80,7 @@ stylesheet. Scope rules under `html.ccw-app`. Prefix a file with `_` to disable 
 |---|---|
 | `00-app-base.css` | Safe areas (edge-to-edge), page layout, no sideways scroll |
 | `10-theme.css` | Design tokens (`--ccw-*`) for light and dark: change colours here |
-| `20-chrome.css` | Header, dropdown menus, footer |
+| `20-chrome.css` | Header, floating bottom nav, menus, footer |
 | `30-home.css` | Full-screen home, Log in / Join buttons |
 | `40-forms.css` | Full-screen popups, inputs, buttons, selects |
 | `50-content.css` | Headings, tables, stats, rankings, news; dark-mode repairs |
