@@ -130,26 +130,6 @@ Turn on logging there with `CCW.settings.set('debug', 1)`.
 **App icon:** `assets/icon.png` is generated from the brand mark in `assets/brand-mark.svg`;
 `npm run icons` rebuilds it and every launcher size.
 
-## Releasing
-
-Every release must be signed with **the same key**, or Android refuses to install it as an update.
-
-1. Signing is configured in `src-tauri/gen/android/keystore.properties` (git-ignored):
-   ```properties
-   storeFile=C:/Users/<you>/.android-keys/coastercount-release.jks
-   password=…
-   keyAlias=coastercount
-   ```
-   **Back up the keystore and its password.** Without them, users must uninstall to update.
-2. Publish a version:
-   ```bash
-   npm run release -- 0.3.0
-   ```
-   This bumps the version, builds a signed APK (arm64 + armv7), tags `v0.3.0`, pushes and creates a
-   GitHub release with `CoasterCount.apk` attached. Installed apps offer the update on their next
-   launch check (at most every 6 hours) or right away via **About this app → Check for updates**.
-   Add `--dry-run` to build without publishing.
-
 ## Credits
 
 All content, data and the Coaster-Count name and logo belong to [coaster-count.com](https://coaster-count.com).
